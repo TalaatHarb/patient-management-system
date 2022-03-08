@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "logging.level[org.springframework.web]",
+    "type": "java.lang.String",
+    "description": "A description for 'logging.level[org.springframework.web]'"
+  },
+  {
+    "name": "logging.level[net.talaatharb.patientmanagementsystem]",
+    "type": "java.lang.String",
+    "description": "A description for 'logging.level[net.talaatharb.patientmanagementsystem]'"
+  }
+]}

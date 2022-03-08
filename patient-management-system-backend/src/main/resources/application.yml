@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  shutdown: graceful
+  
+logging:
+  level[net.talaatharb.patientmanagementsystem]: DEBUG
+  level[org.springframework.web]: DEBUG
+
+spring:
+  jpa:
+    open-in-view: false
+    database: default
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:file:../db/patient-management-system;AUTO_SERVER=TRUE;
+    username: sa
+    password:
