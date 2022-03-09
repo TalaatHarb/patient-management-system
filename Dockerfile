@@ -5,6 +5,4 @@ RUN mvn -DskipTests clean compile package > /dev/null
 
 FROM openjdk:17.0.2-jdk-slim
 COPY --from=maven /usr/src/app/patient-management-system-webapp/target/patient-management-system-webapp-0.0.1-SNAPSHOT-runnable.jar app.jar
-ENV SERVER_PORT=$PORT
-EXPOSE $PORT
 CMD ["java", "-jar", "app.jar"]
