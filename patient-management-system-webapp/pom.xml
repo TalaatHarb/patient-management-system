@@ -49,7 +49,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <mainClass>net.talaatharb.patient-management-system.WebApplication</mainClass>
+                        <mainClass>net.talaatharb.patientmanagementsystem.WebApplication</mainClass>
                     </configuration>
                 </plugin>
             </plugins>
