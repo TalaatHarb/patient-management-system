@@ -17,5 +17,4 @@ jobs:
           heroku_email: "eng.talat.harb@gmail.com"
           usedocker: true
           healthcheck: "https://patient-management-system-demo.herokuapp.com/actuator/health"
-          checkstring: "ok"
           delay: 90
