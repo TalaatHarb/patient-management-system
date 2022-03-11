@@ -1,5 +1,8 @@
 package net.talaatharb.patientmanagementsystem.api.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,5 +20,10 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	@Override
 	public OrganizationDto createOrganization(@RequestBody OrganizationDto organizationDto) {
 		return patientManagementFacade.createOrganization(organizationDto);
+	}
+
+	@Override
+	public List<OrganizationDto> fetchOrganization() {
+		return patientManagementFacade.fetchOrganizations();
 	}
 }

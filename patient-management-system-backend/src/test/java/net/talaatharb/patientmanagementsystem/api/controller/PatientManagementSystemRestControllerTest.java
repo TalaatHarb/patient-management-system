@@ -15,7 +15,7 @@ import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
 class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 
 	private static final String TEST_ORGANIZATION = "Test Organization";
-	private static final String CREATE_ORGANIZATION_URL = "/api/v1/organizations";
+	private static final String ORGANIZATION_URL = "/api/v1/organizations";
 
 	@Test
 	void testCreateOrganization() throws JsonProcessingException, Exception {
@@ -24,14 +24,26 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 		inputOrganization.setName(TEST_ORGANIZATION);
 
 		// Act
-		final ResultActions result = this.mvc.perform(
-				MockMvcRequestBuilders.post(CREATE_ORGANIZATION_URL).contentType(MediaType.APPLICATION_JSON_VALUE)
+		final ResultActions result = this.mvc
+				.perform(MockMvcRequestBuilders.post(ORGANIZATION_URL).contentType(MediaType.APPLICATION_JSON_VALUE)
 						.content(this.objectMapper.writeValueAsString(inputOrganization)));
 
 		// Assert
 		result.andExpect(MockMvcResultMatchers.status().isCreated())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(TEST_ORGANIZATION)))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()));
+	}
+
+	@Test
+	void testFetchOrganization() throws JsonProcessingException, Exception {
+		// Arrange
+
+		// Act
+		final ResultActions result = this.mvc
+				.perform(MockMvcRequestBuilders.get(ORGANIZATION_URL).accept(MediaType.APPLICATION_JSON_VALUE));
+
+		// Assert
+		result.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 }
