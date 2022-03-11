@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization.model';
 
 const API_URL = environment.apiUrl;
-const CREATE_ORGANIZATION_URL = API_URL + '/v1/organizations';
+const ORGANIZATION_URL = API_URL + '/v1/organizations';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,11 @@ export class PatientMangamentService {
   constructor(private httpClient: HttpClient) { }
 
   public createOrganization(organization: Organization): Observable<Organization>{
-const CREATE_ORGANIZATION_URL = API_URL + '/v1/organizations';
-    return this.httpClient.post<Organization>(CREATE_ORGANIZATION_URL, organization);
+const ORGANIZATION_URL = API_URL + '/v1/organizations';
+    return this.httpClient.post<Organization>(ORGANIZATION_URL, organization);
+  }
+
+  public fetchOrganizations(): Observable<Organization[]>{
+    return this.httpClient.get<Organization[]>(ORGANIZATION_URL);
   }
 }

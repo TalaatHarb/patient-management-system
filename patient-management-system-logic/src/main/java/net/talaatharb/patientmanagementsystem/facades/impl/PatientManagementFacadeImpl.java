@@ -1,5 +1,8 @@
 package net.talaatharb.patientmanagementsystem.facades.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,11 @@ public class PatientManagementFacadeImpl implements PatientManagementFacade {
 		final Organization outputOrganization = patientManagementService.createOrganization(inputOrganization);
 		
 		return organizationMapper.fromEntityToDTO(outputOrganization);
+	}
+
+	@Override
+	public List<OrganizationDto> fetchOrganizations() {
+		return organizationMapper.fromEntityToDTO(patientManagementService.fetchOrganizations());
 	}
 
 }

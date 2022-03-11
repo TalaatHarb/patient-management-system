@@ -1,5 +1,6 @@
 package net.talaatharb.patientmanagementsystem.services.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,11 @@ public class PatientManagementServiceImpl implements PatientManagementService{
 	public Organization createOrganization(Organization organization) {
 		organization.setId(UUID.randomUUID());
 		return organizationRepository.save(organization);
+	}
+
+	@Override
+	public List<Organization> fetchOrganizations() {
+		return organizationRepository.findAll();
 	}
 
 }

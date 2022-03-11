@@ -13,4 +13,10 @@ export class CreateMedicalCenterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  fetchOrganization(): void {
+    this.patientManagementService.fetchOrganizations().subscribe(orgs => {
+      console.table(orgs);
+    });
+  }
+
 }
