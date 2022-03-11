@@ -7,8 +7,18 @@
     background-color: #2cc1ff;
 }
 
-.content p{
-    width: 20em;
-    height: 20em;
-    background-color: aquamarine;
+.content{
+    display: flex;
+    flex-direction: column;
+}
+
+.content > *{
+    margin: 0.5em;
+    font-size: 18px;
+}
+
+
+.btn, .input-text{
+    padding: 1em;
+    border: none;
 }

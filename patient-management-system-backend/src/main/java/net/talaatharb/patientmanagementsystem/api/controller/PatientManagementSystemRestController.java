@@ -1,5 +1,6 @@
 package net.talaatharb.patientmanagementsystem.api.controller;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	private final PatientManagementFacade patientManagementFacade;
 	
 	@Override
-	public OrganizationDto createOrganization(OrganizationDto organizationDto) {
+	public OrganizationDto createOrganization(@RequestBody OrganizationDto organizationDto) {
 		return patientManagementFacade.createOrganization(organizationDto);
 	}
 }

@@ -1,5 +1,7 @@
 <div class="create-organization-root">
     <div class="content">
-        <p>create-organization works!</p>
+        <label class="label" for="organization-name">Organization</label>
+        <input class="input-text" type="text" [(ngModel)]="organizationToCreate.name" name="organization-name" placeholder="Organization to Create"/>
+        <button class="btn btn-create" (click)="createOrganization()">Create</button>
     </div>
 </div>
