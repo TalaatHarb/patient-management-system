@@ -1,6 +1,11 @@
 <div class="create-medical-center-root">
     <div class="content">
-        <p>create-medical-center works!</p>
-        <button (click)="fetchOrganization()">fetch</button>
+        <label for="organizations">Choose an organization:</label>
+        <select name="organizations" id="organizations" [(ngModel)]="medicalCenterToCreate.organizationId">
+            <option value="{{organization.id}}" *ngFor="let organization of organizations;index as i">{{organization.name}}</option>
+        </select>
+        <label class="label" for="medical-center-name">Medical Center</label>
+        <input class="input-text" type="text" [(ngModel)]="medicalCenterToCreate.name" name="medical-center-name" placeholder="Medical Center to Create"/>
+        <button class="btn btn-create" (click)="createMedicalCenter()">Create</button>
     </div>
 </div>
