@@ -1,6 +1,5 @@
 package net.talaatharb.patientmanagementsystem.facades.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
