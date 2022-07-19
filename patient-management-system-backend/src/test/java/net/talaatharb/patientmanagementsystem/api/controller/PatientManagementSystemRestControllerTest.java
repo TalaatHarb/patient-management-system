@@ -4,16 +4,21 @@ import java.util.UUID;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.talaatharb.patientmanagementsystem.AbstractControllerTest;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
 class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 
@@ -23,6 +28,9 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 	private static final UUID TEST_ORGANIZTION_ID = UUID.fromString("0de753f6-5b1b-4e60-8834-521c06dfafb4");
 	private static final String MEDICAL_CENTER_URL_SEGEMENT = "/medical-centers";
 
+	@Autowired
+	private OrganizationRepository organizationRepository;
+	
 	@Test
 	void testCreateOrganization() throws JsonProcessingException, Exception {
 		// Arrange
@@ -41,8 +49,14 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 	}
 
 	@Test
+	@Transactional(readOnly = false)
 	void testCreateMedicalCenter() throws JsonProcessingException, Exception {
 		// Arrange
+		Organization organization = new Organization();
+		organization.setId(TEST_ORGANIZTION_ID);
+		organization.setName(TEST_ORGANIZATION);
+		organizationRepository.save(organization);
+		
 		final MedicalCenterDto inputMedicalCenter = new MedicalCenterDto();
 		inputMedicalCenter.setName(TEST_MEDICAL_CENTER);
 		inputMedicalCenter.setOrganizationId(TEST_ORGANIZTION_ID);

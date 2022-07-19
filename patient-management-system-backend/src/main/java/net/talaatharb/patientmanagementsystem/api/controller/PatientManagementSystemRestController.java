@@ -1,11 +1,12 @@
 package net.talaatharb.patientmanagementsystem.api.controller;
 
 import java.util.List;
-import java.util.UUID;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import net.talaatharb.patientmanagementsystem.api.PatientManagementSystemRestAPI;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
@@ -25,8 +26,13 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	
 	@Override
 	public MedicalCenterDto createMedicalCenter(MedicalCenterDto medicalCenterDto, String organizationId) {
-		medicalCenterDto.setId(UUID.randomUUID());
-		return medicalCenterDto;
+		if(medicalCenterDto.getOrganizationId() == null || !medicalCenterDto.getOrganizationId().toString().equals(organizationId)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "organization id is invalid");
+		}
+		if(StringUtils.isBlank(medicalCenterDto.getName())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "name has to contain value");
+		}
+		return patientManagementFacade.createMedicalCenter(medicalCenterDto);
 	}
 
 	@Override
