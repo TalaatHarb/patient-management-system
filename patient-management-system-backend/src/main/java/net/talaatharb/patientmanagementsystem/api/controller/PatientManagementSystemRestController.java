@@ -25,7 +25,7 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	
 	@Override
 	public MedicalCenterDto createMedicalCenter(MedicalCenterDto medicalCenterDto, String organizationId) {
-		medicalCenterDto.setId(UUID.randomUUID());
+//		medicalCenterDto.setId(UUID.randomUUID());
 		return medicalCenterDto;
 	}
 
