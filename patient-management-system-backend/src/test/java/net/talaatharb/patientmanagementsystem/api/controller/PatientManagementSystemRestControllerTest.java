@@ -1,5 +1,7 @@
 package net.talaatharb.patientmanagementsystem.api.controller;
 
+import java.util.UUID;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -10,12 +12,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import net.talaatharb.patientmanagementsystem.AbstractControllerTest;
+import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
 
 class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 
 	private static final String TEST_ORGANIZATION = "Test Organization";
 	private static final String ORGANIZATION_URL = "/api/v1/organizations";
+	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
+	private static final UUID TEST_ORGANIZTION_ID = UUID.fromString("0de753f6-5b1b-4e60-8834-521c06dfafb4");
+	private static final String MEDICAL_CENTER_URL_SEGEMENT = "/medical-centers";
 
 	@Test
 	void testCreateOrganization() throws JsonProcessingException, Exception {
@@ -31,6 +37,26 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 		// Assert
 		result.andExpect(MockMvcResultMatchers.status().isCreated())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(TEST_ORGANIZATION)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()));
+	}
+
+	@Test
+	void testCreateMedicalCenter() throws JsonProcessingException, Exception {
+		// Arrange
+		final MedicalCenterDto inputMedicalCenter = new MedicalCenterDto();
+		inputMedicalCenter.setName(TEST_MEDICAL_CENTER);
+		inputMedicalCenter.setOrganizationId(TEST_ORGANIZTION_ID);
+		String medicalCenterURL = ORGANIZATION_URL + "/" + TEST_ORGANIZTION_ID.toString() + MEDICAL_CENTER_URL_SEGEMENT;
+
+		// Act
+		final ResultActions result = this.mvc
+				.perform(MockMvcRequestBuilders.post(medicalCenterURL).contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(this.objectMapper.writeValueAsString(inputMedicalCenter)));
+
+		// Assert
+		result.andExpect(MockMvcResultMatchers.status().isCreated())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(TEST_MEDICAL_CENTER)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.organizationId", CoreMatchers.is(TEST_ORGANIZTION_ID.toString())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()));
 	}
 
