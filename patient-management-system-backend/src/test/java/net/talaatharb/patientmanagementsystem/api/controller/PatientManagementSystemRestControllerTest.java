@@ -2,6 +2,7 @@ package net.talaatharb.patientmanagementsystem.api.controller;
 
 import java.util.UUID;
 
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,4 +87,27 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 		result.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
+
+	@Test
+	void testFetchMedicalCenters() throws JsonProcessingException, Exception {
+		// Arrange
+		Organization organization = new Organization();
+		organization.setId(TEST_ORGANIZTION_ID);
+		organization.setName(TEST_ORGANIZATION);
+		organizationRepository.save(organization);
+
+		MedicalCenter medicalCenter = new MedicalCenter();
+		medicalCenter.setName(TEST_MEDICAL_CENTER);
+		medicalCenter.setOrganization(organization);
+
+
+		String medicalCentersURL = ORGANIZATION_URL + "/" + TEST_ORGANIZTION_ID.toString() + MEDICAL_CENTER_URL_SEGEMENT;
+
+		// Act
+		final ResultActions result = this.mvc
+				.perform(MockMvcRequestBuilders.get(ORGANIZATION_URL).accept(MediaType.APPLICATION_JSON_VALUE));
+
+		// Assert
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+	}
 }

@@ -1,6 +1,8 @@
 package net.talaatharb.patientmanagementsystem.facades.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import net.talaatharb.patientmanagementsystem.facades.PatientManagementFacade;
 import net.talaatharb.patientmanagementsystem.mappers.MedicalCenterMapper;
 import net.talaatharb.patientmanagementsystem.mappers.OrganizationMapper;
 import net.talaatharb.patientmanagementsystem.services.PatientManagementService;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,4 +48,19 @@ public class PatientManagementFacadeImpl implements PatientManagementFacade {
 		return medicalCenterMapper.fromEntityToDTO(outputMedicalCenter);
 	}
 
+	@Override
+	public List<MedicalCenterDto> fetchMedicalCenters(UUID organizationId) {
+		final Organization organization = patientManagementService.fetchOrganization(organizationId);
+		if(organization == null) {
+			return null;
+		}
+
+		final List<MedicalCenter> medicalCenters = patientManagementService.fetchMedicalCenters(organization);
+		// TODO: learn how mappers work and make a function that maps a list of entities to DTOs.
+		List <MedicalCenterDto> result = new ArrayList<>();
+		for(MedicalCenter medicalCenter : medicalCenters) {
+			result.add(medicalCenterMapper.fromEntityToDTO(medicalCenter));
+		}
+		return result;
+	}
 }

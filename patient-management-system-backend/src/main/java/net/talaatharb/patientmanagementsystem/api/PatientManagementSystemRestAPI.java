@@ -1,6 +1,7 @@
 package net.talaatharb.patientmanagementsystem.api;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,4 +31,9 @@ public interface PatientManagementSystemRestAPI {
 	@PostMapping(path = "/organizations/{organizationId}/medical-centers", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public MedicalCenterDto createMedicalCenter(@RequestBody MedicalCenterDto medicalCenterDto, @PathVariable String organizationId);
+
+
+	@GetMapping(path = "/organizations/{organizationId}/medical-centers", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public List<MedicalCenterDto> fetchMedicalCenters(@PathVariable UUID organizationId);
 }

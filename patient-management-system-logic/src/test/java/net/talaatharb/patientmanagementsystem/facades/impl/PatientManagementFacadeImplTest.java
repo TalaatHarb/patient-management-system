@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
+import net.talaatharb.patientmanagementsystem.mappers.MedicalCenterMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,6 +25,7 @@ import net.talaatharb.patientmanagementsystem.services.PatientManagementService;
 class PatientManagementFacadeImplTest {
 
 	private static final String TEST_ORGANIZATION = "Test Organization";
+	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
 
 	@InjectMocks
 	private PatientManagementFacadeImpl patientManagementFacade;
@@ -29,6 +33,8 @@ class PatientManagementFacadeImplTest {
 	@Mock
 	private OrganizationMapper organizationMapper;
 
+	@Mock
+	private MedicalCenterMapper medicalCenterMapper;
 	@Mock
 	private PatientManagementService patientManagementService;
 
@@ -87,4 +93,49 @@ class PatientManagementFacadeImplTest {
 		Mockito.verify(organizationMapper).fromEntityToDTO(Mockito.anyList());
 	}
 
+	@Test
+	void testFetchMedicalCenters() throws Exception {
+		// Arrange
+		UUID Id = UUID.randomUUID();
+		final Organization organization = new Organization();
+		organization.setName(TEST_ORGANIZATION);
+		organization.setId(Id);
+
+		final MedicalCenter medicalCenter1 = new MedicalCenter();
+		medicalCenter1.setName(TEST_MEDICAL_CENTER);
+		medicalCenter1.setOrganization(organization);
+
+		final MedicalCenter medicalCenter2 = new MedicalCenter();
+		medicalCenter2.setName(TEST_MEDICAL_CENTER);
+		medicalCenter2.setOrganization(organization);
+
+		MedicalCenterDto medicalCenterDto = new MedicalCenterDto();
+		medicalCenterDto.setName(TEST_MEDICAL_CENTER);
+		medicalCenterDto.setOrganizationId(Id);
+
+		// TODO: Replace this with a mock for mapper, when you understand how it works.
+		// start
+		List <MedicalCenterDto> medicalCenterDtos = new ArrayList<>();
+		Mockito.when(medicalCenterMapper.fromEntityToDTO(medicalCenter1)).thenReturn(medicalCenterDto);
+		Mockito.when(medicalCenterMapper.fromEntityToDTO(medicalCenter2)).thenReturn(medicalCenterDto);
+
+		medicalCenterDtos.add(medicalCenterDto);
+		medicalCenterDtos.add(medicalCenterDto);
+		// end
+
+		Mockito.when(patientManagementService.fetchOrganization(Id)).thenReturn(organization);
+		Mockito.when(patientManagementService.fetchMedicalCenters(organization)).thenReturn(List.of(medicalCenter1, medicalCenter2));
+
+
+		// Act
+		List<MedicalCenterDto> result = patientManagementFacade.fetchMedicalCenters(Id);
+
+		// Assert
+		assertEquals(2, result.size());
+		assertEquals(medicalCenterDto, result.get(0));
+		assertEquals(medicalCenterDto, result.get(1));
+
+		Mockito.verify(patientManagementService).fetchMedicalCenters(organization);
+		Mockito.verify(patientManagementService).fetchOrganization(Id);
+	}
 }
