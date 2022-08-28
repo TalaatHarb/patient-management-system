@@ -3,9 +3,6 @@ package net.talaatharb.patientmanagementsystem.api.controller;
 import java.util.List;
 import java.util.UUID;
 
-import net.talaatharb.patientmanagementsystem.repositories.MedicalCenterRepository;
-import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,12 +23,6 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	private static final String TEST_ORGANIZATION = "Test Organization";
 
 	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
-
-	@Autowired
-	private final OrganizationRepository organizationRepository;
-
-	@Autowired
-	private final MedicalCenterRepository medicalCenterRepository;
 
 	@Override
 	public OrganizationDto createOrganization(OrganizationDto organizationDto) {
@@ -56,6 +47,7 @@ public class PatientManagementSystemRestController implements PatientManagementS
 		if(result == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "organization id is invalid");
 		}
+
 		return result;
 	}
 
