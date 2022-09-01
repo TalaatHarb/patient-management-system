@@ -1,6 +1,7 @@
 package net.talaatharb.patientmanagementsystem.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,11 @@ import net.talaatharb.patientmanagementsystem.facades.PatientManagementFacade;
 public class PatientManagementSystemRestController implements PatientManagementSystemRestAPI {
 	
 	private final PatientManagementFacade patientManagementFacade;
-	
+
+	private static final String TEST_ORGANIZATION = "Test Organization";
+
+	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
+
 	@Override
 	public OrganizationDto createOrganization(OrganizationDto organizationDto) {
 		return patientManagementFacade.createOrganization(organizationDto);
@@ -29,10 +34,21 @@ public class PatientManagementSystemRestController implements PatientManagementS
 		if(medicalCenterDto.getOrganizationId() == null || !medicalCenterDto.getOrganizationId().toString().equals(organizationId)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "organization id is invalid");
 		}
+
 		if(StringUtils.isBlank(medicalCenterDto.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "name has to contain value");
 		}
 		return patientManagementFacade.createMedicalCenter(medicalCenterDto);
+	}
+
+	@Override
+	public List<MedicalCenterDto> fetchMedicalCenters(UUID organizationId) {
+		List <MedicalCenterDto> result = patientManagementFacade.fetchMedicalCenters(organizationId);
+		if(result == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "organization id is invalid");
+		}
+
+		return result;
 	}
 
 	@Override

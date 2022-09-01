@@ -6,6 +6,7 @@
 .settings/
 */.factorypath
 *.classpath
+.idea
 target
 db
 
