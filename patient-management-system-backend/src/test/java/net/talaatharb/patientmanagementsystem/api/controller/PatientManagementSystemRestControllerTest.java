@@ -2,11 +2,9 @@ package net.talaatharb.patientmanagementsystem.api.controller;
 
 import java.util.UUID;
 
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.talaatharb.patientmanagementsystem.AbstractControllerTest;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
 import net.talaatharb.patientmanagementsystem.entities.Organization;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
@@ -94,7 +93,7 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 		Organization organization = new Organization();
 		organization.setId(TEST_ORGANIZTION_ID);
 		organization.setName(TEST_ORGANIZATION);
-		organizationRepository.save(organization);
+		organization = organizationRepository.save(organization);
 
 		MedicalCenter medicalCenter = new MedicalCenter();
 		medicalCenter.setName(TEST_MEDICAL_CENTER);
@@ -105,7 +104,7 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 
 		// Act
 		final ResultActions result = this.mvc
-				.perform(MockMvcRequestBuilders.get(ORGANIZATION_URL).accept(MediaType.APPLICATION_JSON_VALUE));
+				.perform(MockMvcRequestBuilders.get(medicalCentersURL).accept(MediaType.APPLICATION_JSON_VALUE));
 
 		// Assert
 		result.andExpect(MockMvcResultMatchers.status().isOk());

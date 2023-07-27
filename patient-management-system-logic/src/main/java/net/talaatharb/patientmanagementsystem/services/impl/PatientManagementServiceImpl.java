@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +42,11 @@ public class PatientManagementServiceImpl implements PatientManagementService{
 
 	@Override
 	public MedicalCenter createMedicalCenter(MedicalCenter inputMedicalCenter) {
-		Organization organization = organizationRepository.getById(inputMedicalCenter.getOrganization().getId());
-		inputMedicalCenter.setOrganization(organization);
-		inputMedicalCenter.setId(UUID.randomUUID());
-		final MedicalCenter outputMedicalCenter = medicalCenterRepository.save(inputMedicalCenter);
-		return outputMedicalCenter;
+		organizationRepository.findById(inputMedicalCenter.getOrganization().getId()).ifPresent(organization -> {			
+			inputMedicalCenter.setOrganization(organization);
+			inputMedicalCenter.setId(UUID.randomUUID());
+		});
+		return medicalCenterRepository.save(inputMedicalCenter);
 	}
 
 	@Override

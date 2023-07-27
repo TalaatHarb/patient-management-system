@@ -70,7 +70,6 @@
 
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven-resource-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>

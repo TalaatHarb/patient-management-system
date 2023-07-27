@@ -3,7 +3,6 @@ package net.talaatharb.patientmanagementsystem.services;
 import java.util.List;
 import java.util.UUID;
 
-import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
 import net.talaatharb.patientmanagementsystem.entities.Organization;
 
