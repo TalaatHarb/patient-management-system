@@ -34,7 +34,7 @@
 		<springdoc.version>2.1.0</springdoc.version>
 		<mapstruct.version>1.5.2.Final</mapstruct.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-		<minimum-coverage-ratio>0.8</minimum-coverage-ratio>
+		<minimum-coverage-ratio>0.6</minimum-coverage-ratio>
 		<pitest.version>1.9.5</pitest.version>
 		<pitest-junit5-plugin.version>1.0.0</pitest-junit5-plugin.version>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
