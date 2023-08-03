@@ -6,12 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --browsers=Chrome",
     "build:prod": "ng build --configuration production",
-    "test:prod": "ng test --browsers=ChromeHeadless --code-coverage --no-watch",
-    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 6006",
-    "build-storybook": "npm run docs:json && build-storybook"
+    "test:prod": "ng test --browsers=ChromeHeadless --code-coverage --no-watch"
   },
   "private": true,
   "dependencies": {
@@ -32,7 +29,6 @@
     "@angular/cli": "^16.1.7",
     "@angular/compiler-cli": "^16.1.8",
     "@babel/core": "^7.17.5",
-    "@compodoc/compodoc": "^1.1.19",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "babel-loader": "^8.2.3",
@@ -43,6 +39,9 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-mocks": "^14.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.2.1",
     "typescript": "~5.1.6"
   }
 }
