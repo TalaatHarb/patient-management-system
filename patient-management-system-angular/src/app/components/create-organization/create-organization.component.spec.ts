@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PatientMangamentService } from 'src/app/services/patient-mangament.service';
 
 import { CreateOrganizationComponent } from './create-organization.component';
+import { FormsModule } from '@angular/forms';
+import { MockModule } from 'ng-mocks';
 
 describe('CreateOrganizationComponent', () => {
   let component: CreateOrganizationComponent;
@@ -12,7 +14,7 @@ describe('CreateOrganizationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CreateOrganizationComponent ],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MockModule(FormsModule)],
       providers: [
         { provide: PatientMangamentService, useValue: patientManagementService }
       ]

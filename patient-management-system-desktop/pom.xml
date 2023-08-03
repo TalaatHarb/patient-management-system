@@ -12,9 +12,9 @@
 	<description>Desktop version for the patient-management-system application</description>
 
 	<properties>
-		<javafx.version>17.0.1</javafx.version>
+		<javafx.version>21-ea+24</javafx.version>
 		<testfx.version>4.0.16-alpha</testfx.version>
-		<monocole.version>jdk-11+26</monocole.version>
+		<monocole.version>jdk-12.0.1+2</monocole.version>
 	</properties>
 
 	<dependencies>

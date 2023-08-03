@@ -5,9 +5,9 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 
-public interface MedicalCenterRepository extends JpaRepository<MedicalCenter, UUID>{
-    public List<MedicalCenter> findAllByOrganization(Organization org);
+public interface MedicalCenterRepository extends JpaRepository<MedicalCenterEntity, UUID>{
+    public List<MedicalCenterEntity> findAllByOrganization(OrganizationEntity org);
 }

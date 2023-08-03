@@ -16,11 +16,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.talaatharb.patientmanagementsystem.AbstractControllerTest;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
-class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
+class PatientManagementSystemRestControllerIT extends AbstractControllerTest {
 
 	private static final String TEST_ORGANIZATION = "Test Organization";
 	private static final String ORGANIZATION_URL = "/api/v1/organizations";
@@ -52,7 +52,7 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 	@Transactional(readOnly = false)
 	void testCreateMedicalCenter() throws JsonProcessingException, Exception {
 		// Arrange
-		Organization organization = new Organization();
+		OrganizationEntity organization = new OrganizationEntity();
 		organization.setId(TEST_ORGANIZTION_ID);
 		organization.setName(TEST_ORGANIZATION);
 		organizationRepository.save(organization);
@@ -90,12 +90,12 @@ class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
 	@Test
 	void testFetchMedicalCenters() throws JsonProcessingException, Exception {
 		// Arrange
-		Organization organization = new Organization();
+		OrganizationEntity organization = new OrganizationEntity();
 		organization.setId(TEST_ORGANIZTION_ID);
 		organization.setName(TEST_ORGANIZATION);
 		organization = organizationRepository.save(organization);
 
-		MedicalCenter medicalCenter = new MedicalCenter();
+		MedicalCenterEntity medicalCenter = new MedicalCenterEntity();
 		medicalCenter.setName(TEST_MEDICAL_CENTER);
 		medicalCenter.setOrganization(organization);
 

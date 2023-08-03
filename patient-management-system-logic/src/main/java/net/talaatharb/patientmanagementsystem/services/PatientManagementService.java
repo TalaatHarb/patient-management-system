@@ -3,20 +3,20 @@ package net.talaatharb.patientmanagementsystem.services;
 import java.util.List;
 import java.util.UUID;
 
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 
 public interface PatientManagementService {
 
-	public Organization createOrganization(Organization organization);
+	public OrganizationEntity createOrganization(OrganizationEntity organization);
 
-	public List<Organization> fetchOrganizations();
-
-
-	public Organization fetchOrganization(UUID organizationId);
-
-	public MedicalCenter createMedicalCenter(MedicalCenter inputMedicalCenter);
+	public List<OrganizationEntity> fetchOrganizations();
 
 
-	public abstract List<MedicalCenter> fetchMedicalCenters(Organization organization);
+	public OrganizationEntity fetchOrganization(UUID organizationId);
+
+	public MedicalCenterEntity createMedicalCenter(MedicalCenterEntity inputMedicalCenter);
+
+
+	public abstract List<MedicalCenterEntity> fetchMedicalCenters(OrganizationEntity organization);
 }

@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 import net.talaatharb.patientmanagementsystem.repositories.MedicalCenterRepository;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
@@ -36,37 +36,50 @@ class PatientManagementServiceImplTest {
 	@Test
 	void testCreateOrganization() {
 		// Arrange
-		final Organization inputOrganization = new Organization();
+		final OrganizationEntity inputOrganization = new OrganizationEntity();
 		inputOrganization.setName(TEST_ORGANIZATION);
-		
-		final Organization expectedResult = new Organization();
+
+		final OrganizationEntity expectedResult = new OrganizationEntity();
 		expectedResult.setId(UUID.randomUUID());
 		expectedResult.setName(TEST_ORGANIZATION);
-		
+
 		Mockito.when(organizationRepository.save(inputOrganization)).thenReturn(expectedResult);
-		
+
 		// Act
-		final Organization result = patientManagementService.createOrganization(inputOrganization);
-		
+		final OrganizationEntity result = patientManagementService.createOrganization(inputOrganization);
+
 		// Assert
-		Mockito.verify(organizationRepository).save(Mockito.any(Organization.class));
+		Mockito.verify(organizationRepository).save(Mockito.any(OrganizationEntity.class));
 		assertEquals(expectedResult, result);
+	}
+
+	@Test
+	void testCreateMedicalCenter() {
+		// Arrange
+		OrganizationEntity organization = createOrgainization(UUID.randomUUID());
+		MedicalCenterEntity medicalCenter = createMedicalCenter(organization);
+
+		Mockito.when(organizationRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(organization));
+		Mockito.when(medicalCenterRepository.save(medicalCenter)).thenReturn(medicalCenter);
+
+		// Act
+		final MedicalCenterEntity result = patientManagementService.createMedicalCenter(medicalCenter);
+
+		// Assert
+		Mockito.verify(medicalCenterRepository).save(Mockito.any(MedicalCenterEntity.class));
+		assertEquals(medicalCenter, result);
 	}
 
 	@Test
 	void testFetchOrganization() {
 		// Arrange
 		UUID Id = UUID.randomUUID();
-		final Organization organization = new Organization();
-		organization.setName(TEST_ORGANIZATION);
-		organization.setId(Id);
-
+		final OrganizationEntity organization = createOrgainization(Id);
 
 		Mockito.when(organizationRepository.findById(Id)).thenReturn(Optional.of(organization));
 
-
 		// Act
-		final Organization result = patientManagementService.fetchOrganization(Id);
+		final OrganizationEntity result = patientManagementService.fetchOrganization(Id);
 
 		// Assert
 		assertEquals(organization, result);
@@ -75,25 +88,33 @@ class PatientManagementServiceImplTest {
 	@Test
 	void testFetchMedicalCenters() {
 		// Arrange
-		UUID Id = UUID.randomUUID();
-		final Organization organization = new Organization();
-		organization.setName(TEST_ORGANIZATION);
-		organization.setId(Id);
+		UUID id = UUID.randomUUID();
+		final OrganizationEntity organization = createOrgainization(id);
 
-		final MedicalCenter medicalCenter1 = new MedicalCenter();
-		medicalCenter1.setName(TEST_MEDICAL_CENTER);
-		medicalCenter1.setOrganization(organization);
+		final MedicalCenterEntity medicalCenter1 = createMedicalCenter(organization);
 
-		final MedicalCenter medicalCenter2 = new MedicalCenter();
-		medicalCenter2.setName(TEST_MEDICAL_CENTER);
-		medicalCenter2.setOrganization(organization);
+		final MedicalCenterEntity medicalCenter2 = createMedicalCenter(organization);
 
 		Mockito.when(medicalCenterRepository.findAllByOrganization(organization))
 				.thenReturn(List.of(medicalCenter1, medicalCenter2));
 		// Act
-		final List<MedicalCenter> result = patientManagementService.fetchMedicalCenters(organization);
+		final List<MedicalCenterEntity> result = patientManagementService.fetchMedicalCenters(organization);
 
 		// Assert
 		assertEquals(List.of(medicalCenter1, medicalCenter2), result);
+	}
+
+	private MedicalCenterEntity createMedicalCenter(final OrganizationEntity organization) {
+		final MedicalCenterEntity medicalCenter1 = new MedicalCenterEntity();
+		medicalCenter1.setName(TEST_MEDICAL_CENTER);
+		medicalCenter1.setOrganization(organization);
+		return medicalCenter1;
+	}
+
+	private OrganizationEntity createOrgainization(UUID id) {
+		final OrganizationEntity organization = new OrganizationEntity();
+		organization.setName(TEST_ORGANIZATION);
+		organization.setId(id);
+		return organization;
 	}
 }

@@ -7,27 +7,27 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 
-@Mapper(componentModel = "spring")
-public interface MedicalCenterMapper extends DefaultMapper<MedicalCenter, MedicalCenterDto> {
+@Mapper
+public interface MedicalCenterMapper extends DefaultMapper<MedicalCenterEntity, MedicalCenterDto> {
 
 	@Mapping(source = "organizationId", target = "organization", qualifiedByName = "setOrganization")
-	public abstract MedicalCenter fromDTOToEntity(MedicalCenterDto dto);
+	public abstract MedicalCenterEntity fromDtoToEntity(MedicalCenterDto dto);
 
 	@Mapping(source = "organization", target = "organizationId", qualifiedByName = "setOrganizationId")
-	public abstract MedicalCenterDto fromEntityToDTO(MedicalCenter entity);
+	public abstract MedicalCenterDto fromEntityToDto(MedicalCenterEntity entity);
 
 	@Named("setOrganization")
-	default Organization setOrganization(UUID organizationId) {
-		Organization organization = new Organization();
+	default OrganizationEntity setOrganization(UUID organizationId) {
+		OrganizationEntity organization = new OrganizationEntity();
 		organization.setId(organizationId);
 		return organization;
 	}
 
 	@Named("setOrganizationId")
-	default UUID setOrganizationId(Organization organization) {
+	default UUID setOrganizationId(OrganizationEntity organization) {
 		return organization.getId();
 	}
 }

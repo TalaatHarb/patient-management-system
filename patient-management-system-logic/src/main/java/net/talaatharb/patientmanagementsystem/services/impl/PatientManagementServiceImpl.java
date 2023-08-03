@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import net.talaatharb.patientmanagementsystem.entities.MedicalCenter;
-import net.talaatharb.patientmanagementsystem.entities.Organization;
+import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
+import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 import net.talaatharb.patientmanagementsystem.repositories.MedicalCenterRepository;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 import net.talaatharb.patientmanagementsystem.services.PatientManagementService;
@@ -24,24 +24,24 @@ public class PatientManagementServiceImpl implements PatientManagementService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public Organization createOrganization(Organization organization) {
+	public OrganizationEntity createOrganization(OrganizationEntity organization) {
 		organization.setId(UUID.randomUUID());
 		return organizationRepository.save(organization);
 	}
 
 	@Override
-	public List<Organization> fetchOrganizations() {
+	public List<OrganizationEntity> fetchOrganizations() {
 		return organizationRepository.findAll();
 	}
 
 	@Override
-	public Organization fetchOrganization(UUID organizationId) {
-		Optional<Organization> org = organizationRepository.findById(organizationId);
+	public OrganizationEntity fetchOrganization(UUID organizationId) {
+		Optional<OrganizationEntity> org = organizationRepository.findById(organizationId);
 		return org.isPresent() ? org.get() : null;
 	}
 
 	@Override
-	public MedicalCenter createMedicalCenter(MedicalCenter inputMedicalCenter) {
+	public MedicalCenterEntity createMedicalCenter(MedicalCenterEntity inputMedicalCenter) {
 		organizationRepository.findById(inputMedicalCenter.getOrganization().getId()).ifPresent(organization -> {			
 			inputMedicalCenter.setOrganization(organization);
 			inputMedicalCenter.setId(UUID.randomUUID());
@@ -50,7 +50,7 @@ public class PatientManagementServiceImpl implements PatientManagementService{
 	}
 
 	@Override
-	public List<MedicalCenter> fetchMedicalCenters(Organization organization) {
+	public List<MedicalCenterEntity> fetchMedicalCenters(OrganizationEntity organization) {
 		return medicalCenterRepository.findAllByOrganization(organization);
 	}
 
