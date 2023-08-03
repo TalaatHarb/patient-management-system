@@ -1,6 +1,8 @@
 package net.talaatharb.patientmanagementsystem.facades.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,5 +155,14 @@ class PatientManagementFacadeImplTest {
 		
 		Mockito.verify(patientManagementService).createMedicalCenter(ArgumentMatchers.any());
 	
+	}
+	
+	@Test
+	void testFetchMedicalCentersWithInvalidOrganizationId() {
+		when(patientManagementService.fetchOrganization(any(UUID.class))).thenReturn(null);
+		
+		 List<MedicalCenterDto> centers = patientManagementFacade.fetchMedicalCenters(UUID.randomUUID());
+		
+		assertEquals(0, centers.size());
 	}
 }

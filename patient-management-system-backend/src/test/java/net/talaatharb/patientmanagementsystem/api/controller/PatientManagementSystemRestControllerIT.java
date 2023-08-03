@@ -20,7 +20,7 @@ import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
 import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
-class PatientManagementSystemRestControllerTest extends AbstractControllerTest {
+class PatientManagementSystemRestControllerIT extends AbstractControllerTest {
 
 	private static final String TEST_ORGANIZATION = "Test Organization";
 	private static final String ORGANIZATION_URL = "/api/v1/organizations";
