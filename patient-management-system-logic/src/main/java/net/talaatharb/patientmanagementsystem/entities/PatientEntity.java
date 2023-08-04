@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
@@ -16,4 +17,10 @@ public class PatientEntity {
 	private String firstName;
 	
 	private String lastName;
+	
+	@ManyToOne
+	private OrganizationEntity organization = new OrganizationEntity();
+	
+	@ManyToOne
+	private MedicalCenterEntity medicalCenter = new MedicalCenterEntity();
 }
