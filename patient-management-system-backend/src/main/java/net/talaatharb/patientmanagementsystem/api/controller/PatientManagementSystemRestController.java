@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import net.talaatharb.patientmanagementsystem.api.PatientManagementSystemRestAPI;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 import net.talaatharb.patientmanagementsystem.facades.PatientManagementFacade;
 
 @RestController
@@ -51,5 +52,10 @@ public class PatientManagementSystemRestController implements PatientManagementS
 	@Override
 	public List<OrganizationDto> fetchOrganization() {
 		return patientManagementFacade.fetchOrganizations();
+	}
+
+	@Override
+	public PatientDto createPatient(PatientDto patientDto) {
+		return patientManagementFacade.createPatient(patientDto);
 	}
 }

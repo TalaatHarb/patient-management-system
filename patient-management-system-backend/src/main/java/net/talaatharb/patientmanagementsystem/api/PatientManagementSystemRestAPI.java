@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 
 @CrossOrigin
 @RequestMapping(path = "/api/v1")
@@ -23,6 +24,10 @@ public interface PatientManagementSystemRestAPI {
 	@PostMapping(path = "/organizations", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public OrganizationDto createOrganization(@RequestBody OrganizationDto organizationDto);
+	
+	@PostMapping(path = "/patients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	public PatientDto createPatient(@RequestBody PatientDto patientDto);
 	
 	@GetMapping(path = "/organizations", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
 import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
+import net.talaatharb.patientmanagementsystem.entities.PatientEntity;
 import net.talaatharb.patientmanagementsystem.facades.PatientManagementFacade;
 import net.talaatharb.patientmanagementsystem.mappers.MedicalCenterMapper;
 import net.talaatharb.patientmanagementsystem.mappers.OrganizationMapper;
+import net.talaatharb.patientmanagementsystem.mappers.PatientMapper;
 import net.talaatharb.patientmanagementsystem.services.PatientManagementService;
 
 @Service
@@ -23,6 +26,8 @@ public class PatientManagementFacadeImpl implements PatientManagementFacade {
 	private final OrganizationMapper organizationMapper;
 
 	private final MedicalCenterMapper medicalCenterMapper;
+	
+	private final PatientMapper patientMapper;
 
 	private final PatientManagementService patientManagementService;
 
@@ -58,5 +63,12 @@ public class PatientManagementFacadeImpl implements PatientManagementFacade {
 		final List<MedicalCenterEntity> medicalCenters = patientManagementService.fetchMedicalCenters(organization);
 
 		return medicalCenterMapper.fromEntityToDto(medicalCenters);
+	}
+
+	@Override
+	public PatientDto createPatient(PatientDto patientDto) {
+		PatientEntity patientEntity = patientMapper.fromDtoToEntity(patientDto);
+		patientEntity = patientManagementService.createPatient(patientEntity);
+		return patientMapper.fromEntityToDto(patientEntity);
 	}
 }

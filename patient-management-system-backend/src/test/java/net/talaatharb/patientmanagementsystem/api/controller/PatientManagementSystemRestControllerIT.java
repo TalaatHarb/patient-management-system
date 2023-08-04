@@ -16,8 +16,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.talaatharb.patientmanagementsystem.AbstractControllerTest;
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
 import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
+import net.talaatharb.patientmanagementsystem.repositories.MedicalCenterRepository;
 import net.talaatharb.patientmanagementsystem.repositories.OrganizationRepository;
 
 class PatientManagementSystemRestControllerIT extends AbstractControllerTest {
@@ -26,10 +28,14 @@ class PatientManagementSystemRestControllerIT extends AbstractControllerTest {
 	private static final String ORGANIZATION_URL = "/api/v1/organizations";
 	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
 	private static final UUID TEST_ORGANIZTION_ID = UUID.fromString("0de753f6-5b1b-4e60-8834-521c06dfafb4");
+	private static final UUID TEST_MEDICAL_CENTER_ID = UUID.fromString("0de753f6-5b1b-4e60-8344-521c06dfafb4");
 	private static final String MEDICAL_CENTER_URL_SEGEMENT = "/medical-centers";
 
 	@Autowired
 	private OrganizationRepository organizationRepository;
+	
+	@Autowired
+	private MedicalCenterRepository medicalCenterRepository;
 	
 	@Test
 	void testCreateOrganization() throws JsonProcessingException, Exception {
@@ -108,5 +114,43 @@ class PatientManagementSystemRestControllerIT extends AbstractControllerTest {
 
 		// Assert
 		result.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	
+	@Test
+	@Transactional(readOnly = false)
+	void testCreatePatient() throws JsonProcessingException, Exception {
+		// Arrange
+		OrganizationEntity organization = new OrganizationEntity();
+		organization.setId(TEST_ORGANIZTION_ID);
+		organization.setName(TEST_ORGANIZATION);
+		organization = organizationRepository.save(organization);
+		
+		MedicalCenterEntity medicalCenter = new MedicalCenterEntity();
+		medicalCenter.setName(TEST_MEDICAL_CENTER);
+		medicalCenter.setId(TEST_MEDICAL_CENTER_ID);
+		medicalCenter.setOrganization(organization);
+		medicalCenter = medicalCenterRepository.save(medicalCenter);
+		
+		final PatientDto patientDto = new PatientDto();
+		patientDto.setOrganizationId(TEST_ORGANIZTION_ID);
+		patientDto.setMedicalCenterId(TEST_MEDICAL_CENTER_ID);
+		patientDto.setFirstName("Mohamed");
+		patientDto.setLastName("Ahmed");
+		
+		String url = "/api/v1/patients";
+		
+		// Act
+		final ResultActions result = this.mvc
+				.perform(MockMvcRequestBuilders.post(url).contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(this.objectMapper.writeValueAsString(patientDto)));
+
+		// Assert
+		result.andExpect(MockMvcResultMatchers.status().isCreated())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.organizationId", CoreMatchers.is(TEST_ORGANIZTION_ID.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.medicalCenterId", CoreMatchers.is(TEST_MEDICAL_CENTER_ID.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName", CoreMatchers.is("Mohamed")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName", CoreMatchers.is("Ahmed")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()));
 	}
 }

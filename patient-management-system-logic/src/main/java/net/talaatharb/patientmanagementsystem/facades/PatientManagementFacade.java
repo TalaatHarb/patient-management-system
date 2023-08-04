@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
 import net.talaatharb.patientmanagementsystem.dtos.OrganizationDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 
 public interface PatientManagementFacade {
 
@@ -15,4 +16,6 @@ public interface PatientManagementFacade {
 	public abstract MedicalCenterDto createMedicalCenter(MedicalCenterDto medicalCenterDto);
 
 	public abstract List<MedicalCenterDto> fetchMedicalCenters(UUID organizationId);
+
+	public abstract PatientDto createPatient(PatientDto patientDto);
 }

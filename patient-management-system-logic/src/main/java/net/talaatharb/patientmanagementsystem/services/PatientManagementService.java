@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import net.talaatharb.patientmanagementsystem.entities.MedicalCenterEntity;
 import net.talaatharb.patientmanagementsystem.entities.OrganizationEntity;
+import net.talaatharb.patientmanagementsystem.entities.PatientEntity;
 
 public interface PatientManagementService {
 
@@ -19,4 +20,6 @@ public interface PatientManagementService {
 
 
 	public abstract List<MedicalCenterEntity> fetchMedicalCenters(OrganizationEntity organization);
+
+	public PatientEntity createPatient(PatientEntity patientEntity);
 }

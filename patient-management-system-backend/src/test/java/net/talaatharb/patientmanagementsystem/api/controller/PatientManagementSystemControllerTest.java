@@ -2,6 +2,7 @@ package net.talaatharb.patientmanagementsystem.api.controller;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
@@ -15,12 +16,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
 import net.talaatharb.patientmanagementsystem.dtos.MedicalCenterDto;
+import net.talaatharb.patientmanagementsystem.dtos.PatientDto;
 import net.talaatharb.patientmanagementsystem.facades.PatientManagementFacade;
 
 @ExtendWith(MockitoExtension.class)
 class PatientManagementSystemControllerTest {
 	
 	private static final String TEST_MEDICAL_CENTER = "Test Medical Center";
+	
+	private static final UUID TEST_ORGANIZTION_ID = UUID.fromString("0de753f6-5b1b-4e60-8834-521c06dfafb4");
+	private static final UUID TEST_MEDICAL_CENTER_ID = UUID.fromString("0de753f6-5b1b-4e60-8344-521c06dfafb4");
+	
 	
 	@InjectMocks
 	PatientManagementSystemRestController patientManagementApi;
@@ -57,6 +63,23 @@ class PatientManagementSystemControllerTest {
 		Executable action = () -> patientManagementApi.fetchMedicalCenters(UUID.randomUUID());
 		
 		assertThrows(ResponseStatusException.class, action);
+	}
+	
+	@Test
+	void testCreatePatientCallsFacade() {
+		// Given
+		final PatientDto patientDto = new PatientDto();
+		patientDto.setOrganizationId(TEST_ORGANIZTION_ID);
+		patientDto.setMedicalCenterId(TEST_MEDICAL_CENTER_ID);
+		patientDto.setFirstName("Mohamed");
+		patientDto.setLastName("Ahmed");
+		
+		// When
+		patientManagementApi.createPatient(patientDto);
+		
+		// Then
+		verify(patientManagementFacade).createPatient(patientDto);
+		
 	}
 
 }
