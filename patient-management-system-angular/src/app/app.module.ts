@@ -13,6 +13,7 @@ import { CreateMedicalCenterComponent } from './components/create-medical-center
 import { EditMedicalCenterComponent } from './components/edit-medical-center/edit-medical-center.component';
 import { CreateOrganizationComponent } from './components/create-organization/create-organization.component';
 import { EditOrganizationComponent } from './components/edit-organization/edit-organization.component';
+import { ListOrganizationsComponent } from './components/list-organizations/list-organizations.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { EditOrganizationComponent } from './components/edit-organization/edit-o
     CreateMedicalCenterComponent,
     EditMedicalCenterComponent,
     CreateOrganizationComponent,
-    EditOrganizationComponent
+    EditOrganizationComponent,
+    ListOrganizationsComponent
   ],
   imports: [
     BrowserModule,

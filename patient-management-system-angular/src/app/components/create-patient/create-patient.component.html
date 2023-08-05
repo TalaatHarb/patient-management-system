@@ -1,5 +1,21 @@
 <div class="create-patient-root">
     <div class="content">
-        <p>create-patient works!</p>
+        <label for="organizations">Choose an organization:</label>
+        <select name="organizations" id="organizations" [ngModel]="patientToCreate.organizationId" (ngModelChange)="organizationChanged($event)">
+            <option value="{{organization.id}}" *ngFor="let organization of organizations;index as i">{{organization.name}}</option>
+        </select>
+
+        <label for="organizations">Choose a Medical Center:</label>
+        <select name="medicalCenters" id="medicalCenters" [(ngModel)]="patientToCreate.medicalCenterId">
+            <option value="{{medicalCenter.id}}" *ngFor="let medicalCenter of medicalCenters;index as i">{{medicalCenter.name}}</option>
+        </select>
+
+        <label class="label" for="patient-first-name">First Name</label>
+        <input class="input-text" type="text" [(ngModel)]="patientToCreate.firstName" name="patient-first-name" placeholder="First Name"/>
+        
+        <label class="label" for="patient-last-name">Last Name</label>
+        <input class="input-text" type="text" [(ngModel)]="patientToCreate.lastName" name="patient-last-name" placeholder="Last Name"/>
+        
+        <button class="btn btn-create" (click)="createPatient()">Create</button>
     </div>
 </div>

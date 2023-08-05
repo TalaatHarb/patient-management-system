@@ -28,7 +28,7 @@ export class CreateMedicalCenterComponent implements OnInit {
   createMedicalCenter(): void{
     if(this.medicalCenterToCreate.organizationId !== '' && this.medicalCenterToCreate.name !== ''){
       this.patientManagementService.createMedicalCenter(this.medicalCenterToCreate).subscribe(medicalCenter => {
-        this.medicalCenterToCreate = medicalCenter;
+        this.medicalCenterToCreate.name = '';
       });
     }
   }

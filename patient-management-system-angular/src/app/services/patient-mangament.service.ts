@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MedicalCenter } from '../models/medical-center.model';
 import { Organization } from '../models/organization.model';
+import { Patient } from '../models/patient.model';
 
 const API_URL = environment.apiUrl;
 const ORGANIZATION_URL = API_URL + '/v1/organizations';
@@ -13,6 +14,9 @@ const MEDICAL_CENTER_URL = '/medical-centers';
   providedIn: 'root'
 })
 export class PatientMangamentService {
+  fetchMedicalCenters(organizationId: string): Observable<MedicalCenter[]> {
+    return this.httpClient.get<MedicalCenter[]>(`${API_URL}/v1/organizations/${organizationId}/medical-centers`);
+  }
   
   constructor(private httpClient: HttpClient) { }
   
@@ -28,5 +32,9 @@ export class PatientMangamentService {
   public createMedicalCenter(medicalCenter: MedicalCenter): Observable<MedicalCenter> {
     const url = ORGANIZATION_URL + '/' + medicalCenter.organizationId + MEDICAL_CENTER_URL;
     return this.httpClient.post<MedicalCenter>(url, medicalCenter);
+  }
+
+  public createPatient(patient: Patient): Observable<Patient>{
+    return this.httpClient.post<Patient>(`${API_URL}/v1/patients`, patient);
   }
 }

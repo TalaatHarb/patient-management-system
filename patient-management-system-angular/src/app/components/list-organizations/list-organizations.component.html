@@ -1,0 +1,5 @@
+<label for="organizations">Choose an organization:</label>
+<select name="organizations" id="organizations" [(ngModel)]="organizationId">
+    <option value="{{organization.id}}" *ngFor="let organization of organizations;index as i">{{organization.name}}
+    </option>
+</select>
