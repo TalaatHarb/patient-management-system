@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListOrganizationsComponent } from './list-organizations.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+import { MockModule } from 'ng-mocks';
 
 describe('ListOrganizationsComponent', () => {
   let component: ListOrganizationsComponent;
@@ -8,7 +11,8 @@ describe('ListOrganizationsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListOrganizationsComponent]
+      declarations: [ListOrganizationsComponent],
+      imports: [HttpClientTestingModule, MockModule(FormsModule)]
     });
     fixture = TestBed.createComponent(ListOrganizationsComponent);
     component = fixture.componentInstance;
